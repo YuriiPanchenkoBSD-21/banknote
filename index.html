@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banknote Combiner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Banknote Combiner</h1>
+
+        <div class="upload-section">
+            <label for="frontImage">Front Side:</label>
+            <input type="file" id="frontImage" accept="image/*">
+            <label for="backImage">Back Side:</label>
+            <input type="file" id="backImage" accept="image/*">
+        </div>
+
+        <button id="combineButton">Combine Images</button>
+
+        <div class="output-section">
+            <canvas id="outputCanvas"></canvas>
+            <a id="downloadLink" download="combined_banknote.png">Download Combined Image</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
