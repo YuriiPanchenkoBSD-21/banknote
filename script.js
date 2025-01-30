@@ -26,7 +26,7 @@ document.getElementById('combineButton').addEventListener('click', function () {
             ctx.drawImage(frontImg, 0, 0); // Draw front image on the left
             ctx.drawImage(backImg, frontImg.width, 0); // Draw back image on the right
             
-            // Convert to image for right-click saving
+            // Convert canvas to an actual image
             let outputImage = document.createElement("img");
             outputImage.src = canvas.toDataURL("image/png");
             outputImage.style.border = "1px solid #ddd"; // Optional styling
@@ -34,6 +34,12 @@ document.getElementById('combineButton').addEventListener('click', function () {
             let outputSection = document.querySelector(".output-section");
             outputSection.innerHTML = ""; // Clear previous images
             outputSection.appendChild(outputImage);
+
+            // Ensure users can right-click to save
+            outputImage.setAttribute("draggable", "false");
+            outputImage.addEventListener("contextmenu", function (e) {
+                e.preventDefault(); // Prevent context menu issues
+            });
         }
     }
 
