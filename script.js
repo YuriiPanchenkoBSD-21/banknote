@@ -18,7 +18,7 @@ document.getElementById('combineButton').addEventListener('click', function () {
         imagesLoaded++;
         if (imagesLoaded === 2) {
             let width = frontImg.width + backImg.width;  // Combine width
-            let height = Math.max(frontImg.height, backImg.height); // Take max height
+            let height = Math.max(frontImg.height, backImg.height); // Use max height
             
             canvas.width = width;
             canvas.height = height;
@@ -26,24 +26,33 @@ document.getElementById('combineButton').addEventListener('click', function () {
             ctx.drawImage(frontImg, 0, 0); // Draw front image on the left
             ctx.drawImage(backImg, frontImg.width, 0); // Draw back image on the right
             
-            // Generate downloadable image
+            // Convert canvas to an image
             let imageURL = canvas.toDataURL("image/png");
 
-            // Create a clickable image with a direct download link
-            let outputImage = document.createElement("a");
-            outputImage.href = imageURL;
-            outputImage.download = "combined_banknote.png";
+            // Create an <img> tag to display the merged image
+            let outputImage = document.createElement("img");
+            outputImage.src = imageURL;
+            outputImage.style.border = "1px solid #ddd";
+            outputImage.style.cursor = "pointer"; // Make it look clickable
 
-            let imgTag = document.createElement("img");
-            imgTag.src = imageURL;
-            imgTag.style.border = "1px solid #ddd";
-            
-            outputImage.appendChild(imgTag);
-            outputImage.style.display = "block";
-
+            // Clear previous images and add new one
             let outputSection = document.querySelector(".output-section");
-            outputSection.innerHTML = ""; // Clear previous images
+            outputSection.innerHTML = "";
             outputSection.appendChild(outputImage);
+
+            // Allow right-click saving
+            outputImage.addEventListener("contextmenu", function (e) {
+                e.preventDefault(); // Prevent default menu issues
+            });
+
+            // Optional: Provide a direct download link
+            let downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "combined_banknote.png";
+            downloadLink.textContent = "Download Image";
+            downloadLink.style.display = "block";
+            downloadLink.style.marginTop = "10px";
+            outputSection.appendChild(downloadLink);
         }
     }
 
