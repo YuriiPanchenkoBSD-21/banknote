@@ -26,10 +26,14 @@ document.getElementById('combineButton').addEventListener('click', function () {
             ctx.drawImage(frontImg, 0, 0); // Draw front image on the left
             ctx.drawImage(backImg, frontImg.width, 0); // Draw back image on the right
             
-            // Enable download
-            let downloadLink = document.getElementById('downloadLink');
-            downloadLink.href = canvas.toDataURL("image/png");
-            downloadLink.style.display = "inline-block";
+            // Convert to image for right-click saving
+            let outputImage = document.createElement("img");
+            outputImage.src = canvas.toDataURL("image/png");
+            outputImage.style.border = "1px solid #ddd"; // Optional styling
+            
+            let outputSection = document.querySelector(".output-section");
+            outputSection.innerHTML = ""; // Clear previous images
+            outputSection.appendChild(outputImage);
         }
     }
 
@@ -39,4 +43,3 @@ document.getElementById('combineButton').addEventListener('click', function () {
     frontImg.src = URL.createObjectURL(frontFile);
     backImg.src = URL.createObjectURL(backFile);
 });
-
