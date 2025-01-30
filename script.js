@@ -26,20 +26,24 @@ document.getElementById('combineButton').addEventListener('click', function () {
             ctx.drawImage(frontImg, 0, 0); // Draw front image on the left
             ctx.drawImage(backImg, frontImg.width, 0); // Draw back image on the right
             
-            // Convert canvas to an actual image
-            let outputImage = document.createElement("img");
-            outputImage.src = canvas.toDataURL("image/png");
-            outputImage.style.border = "1px solid #ddd"; // Optional styling
+            // Generate downloadable image
+            let imageURL = canvas.toDataURL("image/png");
+
+            // Create a clickable image with a direct download link
+            let outputImage = document.createElement("a");
+            outputImage.href = imageURL;
+            outputImage.download = "combined_banknote.png";
+
+            let imgTag = document.createElement("img");
+            imgTag.src = imageURL;
+            imgTag.style.border = "1px solid #ddd";
             
+            outputImage.appendChild(imgTag);
+            outputImage.style.display = "block";
+
             let outputSection = document.querySelector(".output-section");
             outputSection.innerHTML = ""; // Clear previous images
             outputSection.appendChild(outputImage);
-
-            // Ensure users can right-click to save
-            outputImage.setAttribute("draggable", "false");
-            outputImage.addEventListener("contextmenu", function (e) {
-                e.preventDefault(); // Prevent context menu issues
-            });
         }
     }
 
