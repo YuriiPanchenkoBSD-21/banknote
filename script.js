@@ -17,14 +17,14 @@ document.getElementById('combineButton').addEventListener('click', function () {
     function imageLoaded() {
         imagesLoaded++;
         if (imagesLoaded === 2) {
-            let width = Math.max(frontImg.width, backImg.width);
-            let height = frontImg.height + backImg.height;
+            let width = frontImg.width + backImg.width;  // Combine width
+            let height = Math.max(frontImg.height, backImg.height); // Take max height
             
             canvas.width = width;
             canvas.height = height;
             
-            ctx.drawImage(frontImg, 0, 0);
-            ctx.drawImage(backImg, 0, frontImg.height);
+            ctx.drawImage(frontImg, 0, 0); // Draw front image on the left
+            ctx.drawImage(backImg, frontImg.width, 0); // Draw back image on the right
             
             // Enable download
             let downloadLink = document.getElementById('downloadLink');
@@ -39,3 +39,4 @@ document.getElementById('combineButton').addEventListener('click', function () {
     frontImg.src = URL.createObjectURL(frontFile);
     backImg.src = URL.createObjectURL(backFile);
 });
+
